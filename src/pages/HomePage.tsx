@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus, Wine, Star, MapPin, Sparkles, Settings } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
+import RegionIcon from '@/components/RegionIcon';
 import vineyardBg from '@/assets/vineyard-bg.png';
 import { supabase } from '@/integrations/supabase/client';
 

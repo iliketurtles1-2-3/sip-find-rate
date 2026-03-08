@@ -5,6 +5,7 @@ import AddWineDialog from '@/components/AddWineDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Wine } from 'lucide-react';
+import wineryBg from '@/assets/winery-bg.jpg';
 
 type WineItem = {
   id: string;

@@ -93,7 +93,7 @@ const CellarPage = () => {
         className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
         style={{ backgroundImage: `url(${vineyardBg})` }}
       />
-      <div className="fixed inset-0 bg-background/70 backdrop-blur-[2px] -z-10" />
+      <div className="fixed inset-0 bg-background/40 -z-10" />
 
       <main className="container max-w-5xl mx-auto px-4 py-8">
         {wines.length > 0 && (

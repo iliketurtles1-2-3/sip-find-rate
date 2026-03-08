@@ -39,6 +39,8 @@ const colorDot: Record<string, string> = {
   orange: 'bg-orange-500',
 };
 
+const colorOptions = ['red', 'white', 'rosé', 'sparkling', 'dessert', 'orange'];
+
 const CellarPage = () => {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -47,9 +49,16 @@ const CellarPage = () => {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [addMode, setAddMode] = useState<'existing' | 'new'>('existing');
   const [selectedWineId, setSelectedWineId] = useState('');
   const [addQuantity, setAddQuantity] = useState(1);
   const [addLocation, setAddLocation] = useState('');
+  // New wine fields
+  const [newName, setNewName] = useState('');
+  const [newVintage, setNewVintage] = useState('');
+  const [newRegion, setNewRegion] = useState('');
+  const [newColor, setNewColor] = useState('red');
+  const [newGrape, setNewGrape] = useState('');
 
   const fetchInventory = async () => {
     if (!user) { setLoading(false); return; }
@@ -90,15 +99,58 @@ const CellarPage = () => {
     }
   };
 
+  const resetForm = () => {
+    setShowAddForm(false);
+    setAddMode('existing');
+    setSelectedWineId('');
+    setAddQuantity(1);
+    setAddLocation('');
+    setNewName('');
+    setNewVintage('');
+    setNewRegion('');
+    setNewColor('red');
+    setNewGrape('');
+  };
+
   const handleAdd = async () => {
-    if (!user || !selectedWineId) return;
-    const existing = inventory.find(i => i.wine_id === selectedWineId);
+    if (!user) return;
+
+    let wineId = selectedWineId;
+
+    if (addMode === 'new') {
+      if (!newName.trim()) return;
+      // Create the wine first (untasted — no rating, no notes)
+      const { data: newWine, error: wineErr } = await supabase
+        .from('wines')
+        .insert({
+          user_id: user.id,
+          name: newName.trim(),
+          vintage: newVintage ? parseInt(newVintage) : null,
+          region: newRegion || null,
+          color: newColor,
+          grape_variety: newGrape || null,
+          rating: null,
+          notes: null,
+        })
+        .select('id')
+        .single();
+      if (wineErr || !newWine) {
+        toast({ title: 'Error', description: wineErr?.message || 'Failed to create wine.', variant: 'destructive' });
+        return;
+      }
+      wineId = newWine.id;
+      fetchWines();
+    }
+
+    if (!wineId) return;
+
+    const existing = inventory.find(i => i.wine_id === wineId);
     if (existing) {
       await updateQuantity(existing, addQuantity);
     } else {
       const { error } = await supabase.from('cellar_inventory').insert({
         user_id: user.id,
-        wine_id: selectedWineId,
+        wine_id: wineId,
         quantity: addQuantity,
         location: addLocation || null,
       });
@@ -108,10 +160,7 @@ const CellarPage = () => {
       }
     }
     toast({ title: 'Added', description: 'Wine added to your cellar.' });
-    setShowAddForm(false);
-    setSelectedWineId('');
-    setAddQuantity(1);
-    setAddLocation('');
+    resetForm();
     fetchInventory();
   };
 
@@ -122,6 +171,8 @@ const CellarPage = () => {
       .filter(Boolean)
       .some(f => f!.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const canSubmit = addMode === 'existing' ? !!selectedWineId : !!newName.trim();
 
   return (
     <div className="min-h-screen relative bg-background">
@@ -169,18 +220,87 @@ const CellarPage = () => {
         {showAddForm && (
           <Card className="p-4 mb-5 space-y-3 bg-card/80 backdrop-blur border-border animate-fade-in">
             <p className="text-sm font-semibold">Add wine to cellar</p>
-            <select
-              value={selectedWineId}
-              onChange={e => setSelectedWineId(e.target.value)}
-              className="w-full h-11 rounded-xl bg-background border border-border px-3 text-sm"
-            >
-              <option value="">Select a wine from your diary...</option>
-              {wines.map(w => (
-                <option key={w.id} value={w.id}>
-                  {w.name} {w.vintage ? `(${w.vintage})` : ''}
-                </option>
-              ))}
-            </select>
+
+            {/* Mode toggle */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setAddMode('existing')}
+                className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${
+                  addMode === 'existing'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted/50 text-muted-foreground border border-border'
+                }`}
+              >
+                From Diary
+              </button>
+              <button
+                onClick={() => setAddMode('new')}
+                className={`flex-1 py-2 rounded-xl text-xs font-medium transition-all ${
+                  addMode === 'new'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted/50 text-muted-foreground border border-border'
+                }`}
+              >
+                New Wine
+              </button>
+            </div>
+
+            {addMode === 'existing' ? (
+              <select
+                value={selectedWineId}
+                onChange={e => setSelectedWineId(e.target.value)}
+                className="w-full h-11 rounded-xl bg-background border border-border px-3 text-sm"
+              >
+                <option value="">Select a wine from your diary...</option>
+                {wines.map(w => (
+                  <option key={w.id} value={w.id}>
+                    {w.name} {w.vintage ? `(${w.vintage})` : ''}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div className="space-y-2">
+                <Input
+                  value={newName}
+                  onChange={e => setNewName(e.target.value)}
+                  placeholder="Wine name *"
+                  className="bg-background border-border rounded-xl h-11"
+                />
+                <div className="flex gap-2">
+                  <Input
+                    value={newVintage}
+                    onChange={e => setNewVintage(e.target.value)}
+                    placeholder="Vintage"
+                    type="number"
+                    className="w-24 bg-background border-border rounded-xl h-11"
+                  />
+                  <Input
+                    value={newRegion}
+                    onChange={e => setNewRegion(e.target.value)}
+                    placeholder="Region"
+                    className="flex-1 bg-background border-border rounded-xl h-11"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    value={newGrape}
+                    onChange={e => setNewGrape(e.target.value)}
+                    placeholder="Grape variety"
+                    className="flex-1 bg-background border-border rounded-xl h-11"
+                  />
+                  <select
+                    value={newColor}
+                    onChange={e => setNewColor(e.target.value)}
+                    className="h-11 rounded-xl bg-background border border-border px-3 text-sm capitalize"
+                  >
+                    {colorOptions.map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
             <div className="flex gap-3">
               <Input
                 type="number"
@@ -198,10 +318,10 @@ const CellarPage = () => {
               />
             </div>
             <div className="flex gap-2">
-              <Button onClick={handleAdd} disabled={!selectedWineId} className="rounded-full flex-1">
+              <Button onClick={handleAdd} disabled={!canSubmit} className="rounded-full flex-1">
                 Add to Cellar
               </Button>
-              <Button variant="outline" onClick={() => setShowAddForm(false)} className="rounded-full">
+              <Button variant="outline" onClick={resetForm} className="rounded-full">
                 Cancel
               </Button>
             </div>
@@ -233,7 +353,6 @@ const CellarPage = () => {
             {filtered.map(item => (
               <Card key={item.id} className="p-4 bg-card/80 backdrop-blur border-border">
                 <div className="flex items-center gap-4">
-                  {/* Wine image or color dot */}
                   <div className="w-12 h-12 rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center shrink-0 overflow-hidden">
                     {item.wine.image_url ? (
                       <img src={item.wine.image_url} alt={item.wine.name} className="w-full h-full object-cover" />
@@ -241,8 +360,6 @@ const CellarPage = () => {
                       <div className={`w-4 h-4 rounded-full ${colorDot[item.wine.color || ''] || 'bg-muted-foreground/30'}`} />
                     )}
                   </div>
-
-                  {/* Info */}
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm leading-tight truncate">{item.wine.name}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">
@@ -254,8 +371,6 @@ const CellarPage = () => {
                       </p>
                     )}
                   </div>
-
-                  {/* Quantity controls */}
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => updateQuantity(item, -1)}
@@ -283,7 +398,7 @@ const CellarPage = () => {
             <div>
               <h2 className="text-xl font-semibold mb-1">Your cellar is empty</h2>
               <p className="text-muted-foreground text-sm max-w-[250px] mx-auto">
-                Start tracking your wine inventory. Add wines from your diary to keep count.
+                Start tracking your wine inventory — add from your diary or log a new bottle.
               </p>
             </div>
             <Button onClick={() => setShowAddForm(true)} className="rounded-full gap-1.5">

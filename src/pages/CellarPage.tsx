@@ -4,8 +4,8 @@ import WineCard from '@/components/WineCard';
 import AddWineDialog from '@/components/AddWineDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search, Wine } from 'lucide-react';
-import wineryBg from '@/assets/winery-bg.jpg';
+import { Plus, Search } from 'lucide-react';
+import vineyardBg from '@/assets/vineyard-bg.png';
 
 type WineItem = {
   id: string;
@@ -91,17 +91,9 @@ const CellarPage = () => {
     <div className="min-h-screen relative">
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
-        style={{ backgroundImage: `url(${wineryBg})` }}
+        style={{ backgroundImage: `url(${vineyardBg})` }}
       />
       <div className="fixed inset-0 bg-background/70 backdrop-blur-[2px] -z-10" />
-      <header className="border-b border-border sticky top-0 bg-background/80 backdrop-blur-xl z-50">
-        <div className="container max-w-5xl mx-auto flex items-center py-4 px-4">
-          <div className="flex items-center gap-3">
-            <Wine className="w-6 h-6 text-wine-gold" />
-            <h1 className="text-xl font-display font-bold">Cellar</h1>
-          </div>
-        </div>
-      </header>
 
       <main className="container max-w-5xl mx-auto px-4 py-8">
         {wines.length > 0 && (
@@ -139,7 +131,6 @@ const CellarPage = () => {
           </div>
         ) : wines.length === 0 ? (
           <div className="text-center py-20 space-y-4">
-            <Wine className="w-16 h-16 text-muted-foreground/20 mx-auto" />
             <h2 className="text-2xl font-display font-semibold">Your cellar is empty</h2>
             <p className="text-muted-foreground font-sans">Add your first bottle to start tracking.</p>
             <Button onClick={() => { setEditWine(null); setDialogOpen(true); }}>

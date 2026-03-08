@@ -4,54 +4,73 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
+
 @layer base {
   :root {
-    --background: 150 12% 8%;
-    --foreground: 90 15% 92%;
+    --background: 20 10% 7%;
+    --foreground: 30 20% 90%;
 
-    --card: 150 10% 11%;
-    --card-foreground: 90 15% 92%;
+    --card: 20 10% 10%;
+    --card-foreground: 30 20% 90%;
 
-    --popover: 150 10% 13%;
-    --popover-foreground: 90 15% 92%;
+    --popover: 20 10% 12%;
+    --popover-foreground: 30 20% 90%;
 
-    --primary: 145 40% 38%;
-    --primary-foreground: 90 20% 97%;
+    --primary: 336 74.4444% 35.2941%;
+    --primary-foreground: 30 20% 95%;
 
-    --secondary: 150 12% 16%;
-    --secondary-foreground: 90 15% 85%;
+    --secondary: 30 15% 15%;
+    --secondary-foreground: 30 20% 85%;
 
-    --muted: 150 10% 15%;
-    --muted-foreground: 120 8% 50%;
+    --muted: 20 10% 14%;
+    --muted-foreground: 30 10% 55%;
 
-    --accent: 45 65% 55%;
-    --accent-foreground: 150 12% 8%;
+    --accent: 38 70% 55%;
+    --accent-foreground: 20 10% 7%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 90 20% 97%;
+    --destructive-foreground: 30 20% 95%;
 
-    --border: 150 10% 19%;
-    --input: 150 10% 19%;
-    --ring: 145 40% 38%;
+    --border: 20 10% 18%;
+    --input: 20 10% 18%;
+    --ring: 350 45% 35%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
-    --sidebar-background: 150 12% 9%;
-    --sidebar-foreground: 90 15% 85%;
-    --sidebar-primary: 145 40% 38%;
-    --sidebar-primary-foreground: 90 20% 97%;
-    --sidebar-accent: 150 10% 15%;
-    --sidebar-accent-foreground: 90 15% 85%;
-    --sidebar-border: 150 10% 17%;
-    --sidebar-ring: 145 40% 38%;
+    --sidebar-background: 20 10% 9%;
+    --sidebar-foreground: 30 20% 85%;
+    --sidebar-primary: 350 45% 35%;
+    --sidebar-primary-foreground: 30 20% 95%;
+    --sidebar-accent: 20 10% 14%;
+    --sidebar-accent-foreground: 30 20% 85%;
+    --sidebar-border: 20 10% 16%;
+    --sidebar-ring: 350 45% 35%;
 
     --wine-red: 350 45% 35%;
     --wine-red-light: 350 40% 45%;
-    --wine-gold: 45 65% 55%;
-    --wine-gold-dim: 45 45% 35%;
+    --wine-gold: 38 70% 55%;
+    --wine-gold-dim: 38 50% 35%;
     --wine-rosé: 340 40% 60%;
-    --wine-white-grape: 80 40% 65%;
-    --wine-sparkling: 60 45% 72%;
+    --wine-white-grape: 50 40% 70%;
+    --wine-sparkling: 45 50% 75%;
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --shadow-sm: 0px 1px 1.5px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow: 0px 1px 3px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow-md: 0px 1px 4.5px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow-lg: 0px 1px 7.5px 0px hsla(0, 0%, 0%, 0.16);
+  }
+  .dark {
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --radius: 1.25rem;
+    --shadow-sm: 0px 1px 1.5px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow: 0px 1px 3px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow-md: 0px 1px 4.5px 0px hsla(0, 0%, 0%, 0.16);
+    --shadow-lg: 0px 1px 7.5px 0px hsla(0, 0%, 0%, 0.16);
   }
 }
 

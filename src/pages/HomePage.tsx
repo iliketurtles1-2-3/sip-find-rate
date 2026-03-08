@@ -17,7 +17,7 @@ const HomePage = () => {
       <div className="fixed inset-x-0 top-[30%] bottom-0 bg-gradient-to-b from-transparent via-background/60 to-background -z-10" />
 
       <div className="pt-20 px-6 text-center">
-        <h1 className="text-5xl sm:text-6xl font-display font-bold tracking-tight leading-tight mb-4 animate-fade-in drop-shadow-lg">
+        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight leading-tight mb-4 animate-fade-in drop-shadow-lg" style={{ fontFamily: "'Montserrat', sans-serif" }}>
           Your Wine
           <br />
           <span className="text-primary">Journey</span>

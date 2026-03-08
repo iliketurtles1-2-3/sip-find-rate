@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Wine, Lightbulb, User, Home } from 'lucide-react';
+import { Wine, Lightbulb, Home } from 'lucide-react';
 
 const tabs = [
   { path: '/', label: 'Home', icon: Home },

@@ -47,14 +47,8 @@ const HomePage = () => {
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
         style={{ backgroundImage: `url(${vineyardBg})` }} />
-      {/* Bottom fade */}
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-transparent to-background -z-10" />
       <div className="fixed inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/95 to-transparent -z-10" />
-      {/* Top fade */}
-      <div className="fixed inset-x-0 top-0 h-1/4 bg-gradient-to-b from-background via-background/80 to-transparent -z-10" />
-      {/* Left fade */}
-      <div className="fixed inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background via-background/70 to-transparent -z-10" />
-      {/* Right fade */}
-      <div className="fixed inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background via-background/70 to-transparent -z-10" />
 
       <button
         onClick={() => navigate('/settings')}

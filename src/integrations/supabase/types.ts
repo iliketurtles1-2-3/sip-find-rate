@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      cellar_inventory: {
+        Row: {
+          created_at: string
+          drink_by: string | null
+          id: string
+          location: string | null
+          purchase_date: string | null
+          purchase_price: number | null
+          quantity: number
+          updated_at: string
+          user_id: string
+          wine_id: string
+        }
+        Insert: {
+          created_at?: string
+          drink_by?: string | null
+          id?: string
+          location?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number
+          updated_at?: string
+          user_id: string
+          wine_id: string
+        }
+        Update: {
+          created_at?: string
+          drink_by?: string | null
+          id?: string
+          location?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quantity?: number
+          updated_at?: string
+          user_id?: string
+          wine_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cellar_inventory_wine_id_fkey"
+            columns: ["wine_id"]
+            isOneToOne: false
+            referencedRelation: "wines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

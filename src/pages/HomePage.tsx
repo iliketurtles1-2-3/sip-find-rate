@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus, Wine, Star, MapPin, Sparkles, Settings } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
+import RegionIcon from '@/components/RegionIcon';
 import vineyardBg from '@/assets/vineyard-bg.png';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -86,7 +87,11 @@ const HomePage = () => {
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Avg Rating</p>
             </div>
             <div className="col-span-2 rounded-2xl bg-card/80 backdrop-blur-md border border-border p-4 flex items-center gap-3">
-              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              {stats.topRegion !== '—' ? (
+                <RegionIcon region={stats.topRegion} className="w-10 h-10 shrink-0" />
+              ) : (
+                <MapPin className="w-4 h-4 text-primary shrink-0" />
+              )}
               <div>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Top Region</p>
                 <p className="text-sm font-semibold text-foreground capitalize" style={{ fontFamily: "'Outfit', sans-serif" }}>{stats.topRegion}</p>

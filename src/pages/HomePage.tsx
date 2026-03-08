@@ -50,7 +50,7 @@ const HomePage = () => {
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-transparent to-background -z-10" />
       <div className="fixed inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/95 to-transparent -z-10" />
 
-      <div className="pt-28 px-5">
+      <div className="pt-40 px-5">
         {/* Dashboard block — ~25vh */}
         <div className="h-[25vh] flex gap-3">
           {/* Left — recommendation (wider) */}

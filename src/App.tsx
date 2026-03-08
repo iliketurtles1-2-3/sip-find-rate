@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import HomePage from "./pages/HomePage";
+import DiaryPage from "./pages/DiaryPage";
 import CellarPage from "./pages/CellarPage";
 import SuggestionsPage from "./pages/SuggestionsPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -37,6 +38,7 @@ const App = () => (
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
             <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+            <Route path="/diary" element={<ProtectedRoute><DiaryPage /></ProtectedRoute>} />
             <Route path="/cellar" element={<ProtectedRoute><CellarPage /></ProtectedRoute>} />
             <Route path="/suggestions" element={<ProtectedRoute><SuggestionsPage /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />

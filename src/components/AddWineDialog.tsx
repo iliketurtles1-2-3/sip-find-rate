@@ -12,6 +12,30 @@ type WineRow = Tables<'wines'>;
 
 const WINE_COLORS = ['red', 'white', 'rosé', 'sparkling', 'dessert', 'orange'] as const;
 
+const WINE_REGIONS = [
+  'Bordeaux, France',
+  'Burgundy, France',
+  'Champagne, France',
+  'Rhône Valley, France',
+  'Loire Valley, France',
+  'Alsace, France',
+  'Tuscany, Italy',
+  'Piedmont, Italy',
+  'Veneto, Italy',
+  'Rioja, Spain',
+  'Ribera del Duero, Spain',
+  'Napa Valley, USA',
+  'Sonoma, USA',
+  'Willamette Valley, USA',
+  'Barossa Valley, Australia',
+  'Marlborough, New Zealand',
+  'Mendoza, Argentina',
+  'Stellenbosch, South Africa',
+  'Mosel, Germany',
+  'Douro Valley, Portugal',
+  'Wachau, Austria',
+] as const;
+
 interface AddWineDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -122,14 +146,17 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="region">Region</Label>
-              <Input
-                id="region"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-                placeholder="Bordeaux, France"
-                className="bg-muted border-border"
-              />
+              <Label>Region</Label>
+              <Select value={region} onValueChange={setRegion}>
+                <SelectTrigger className="bg-muted border-border">
+                  <SelectValue placeholder="Select region" />
+                </SelectTrigger>
+                <SelectContent>
+                  {WINE_REGIONS.map((r) => (
+                    <SelectItem key={r} value={r}>{r}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label htmlFor="grape">Grape Variety</Label>

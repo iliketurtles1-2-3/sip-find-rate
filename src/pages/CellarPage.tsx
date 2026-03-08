@@ -88,12 +88,7 @@ const CellarPage = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
-      <div
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
-        style={{ backgroundImage: `url(${vineyardBg})` }}
-      />
-      <div className="fixed inset-0 bg-background/40 -z-10" />
+    <div className="min-h-screen relative bg-background">
 
       <main className="container max-w-5xl mx-auto px-4 py-8 pb-24">
         {wines.length > 0 && (

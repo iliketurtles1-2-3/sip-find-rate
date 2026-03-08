@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Wine } from 'lucide-react';
 import wineryBg from '@/assets/winery-bg.jpg';
+import bottleLogo from '@/assets/bottle-logo.png';
 
 type WineItem = {
   id: string;

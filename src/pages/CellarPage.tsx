@@ -108,6 +108,7 @@ const CellarPage = () => {
 
   return (
     <div className="min-h-screen relative bg-background">
+      <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10" />
       {/* Header */}
       <div className="pt-10 pb-4 px-5">
         <div className="flex items-end justify-between mb-6">

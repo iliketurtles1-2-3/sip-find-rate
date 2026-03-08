@@ -13,23 +13,25 @@ const HomePage = () => {
         className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
         style={{ backgroundImage: `url(${vineyardBg})` }} />
       
-      <div className="fixed inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent -z-10" />
+      <div className="fixed inset-0 bg-gradient-to-b from-transparent via-transparent to-background -z-10" />
+      <div className="fixed inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/95 to-transparent -z-10" />
 
-      <div className="flex-1 flex flex-col items-center justify-end pb-32 px-6 text-center">
-        <h1 className="text-5xl sm:text-6xl font-display font-bold tracking-tight leading-tight mb-4">
+      <div className="pt-20 px-6 text-center">
+        <h1 className="text-5xl sm:text-6xl font-display font-bold tracking-tight leading-tight mb-4 animate-fade-in drop-shadow-lg">
           Your Wine
           <br />
           <span className="text-primary">Journey</span>
         </h1>
-        
+      </div>
 
-        
+      <div className="flex-1" />
+
+      <div className="pb-32 px-6 text-center">
         <Button
           size="lg"
           onClick={() => navigate('/cellar')}
           className="rounded-full px-8">
-          
-          Open Cellar <ArrowRight className="w-4 h-4 ml-2" />
+          <Plus className="w-4 h-4 mr-2" /> Log New Wine
         </Button>
       </div>
 

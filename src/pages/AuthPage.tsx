@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowRight } from 'lucide-react';
 import logo from '@/assets/logo.png';
+import wineryBg from '@/assets/winery-bg.jpg';
 import { useToast } from '@/hooks/use-toast';
 
 const AuthPage = () => {
@@ -40,21 +41,27 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen relative flex items-center justify-center px-4">
+      <div
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-20"
+        style={{ backgroundImage: `url(${wineryBg})` }}
+      />
+      <div className="fixed inset-0 bg-black/40 -z-10" />
+
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/20 mb-2">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md mb-2">
             <img src={logo} alt="Terroir logo" className="w-10 h-10" />
           </div>
-          <h1 className="text-4xl font-display font-bold tracking-tight">Cellar</h1>
-          <p className="text-muted-foreground font-sans">
+          <h1 className="text-4xl font-display font-bold tracking-tight text-white drop-shadow-lg">Cellar</h1>
+          <p className="text-white/70 font-sans">
             Your personal wine collection, beautifully organized.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5 bg-card p-8 rounded-xl border border-border">
+        <form onSubmit={handleSubmit} className="space-y-5 bg-white/10 backdrop-blur-xl p-8 rounded-2xl border border-white/20 shadow-2xl">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-sm font-sans">Email</Label>
+            <Label htmlFor="email" className="text-sm font-sans text-white/80">Email</Label>
             <Input
               id="email"
               type="email"
@@ -62,11 +69,11 @@ const AuthPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="bg-muted border-border"
+              className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-sans">Password</Label>
+            <Label htmlFor="password" className="text-sm font-sans text-white/80">Password</Label>
             <Input
               id="password"
               type="password"
@@ -75,7 +82,7 @@ const AuthPage = () => {
               placeholder="••••••••"
               required
               minLength={6}
-              className="bg-muted border-border"
+              className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-white/40"
             />
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
@@ -84,7 +91,7 @@ const AuthPage = () => {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground font-sans">
+        <p className="text-center text-sm text-white/60 font-sans">
           {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
           <button
             onClick={() => setIsSignUp(!isSignUp)}

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Plus, Wine, Star, MapPin, Sparkles } from 'lucide-react';
+import { Plus, Wine, Star, MapPin, Sparkles, Settings } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
 import vineyardBg from '@/assets/vineyard-bg.png';
 import { supabase } from '@/integrations/supabase/client';

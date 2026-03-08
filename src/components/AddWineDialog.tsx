@@ -146,14 +146,17 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="region">Region</Label>
-              <Input
-                id="region"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-                placeholder="Bordeaux, France"
-                className="bg-muted border-border"
-              />
+              <Label>Region</Label>
+              <Select value={region} onValueChange={setRegion}>
+                <SelectTrigger className="bg-muted border-border">
+                  <SelectValue placeholder="Select region" />
+                </SelectTrigger>
+                <SelectContent>
+                  {WINE_REGIONS.map((r) => (
+                    <SelectItem key={r} value={r}>{r}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label htmlFor="grape">Grape Variety</Label>

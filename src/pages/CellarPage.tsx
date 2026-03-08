@@ -4,7 +4,7 @@ import WineCard from '@/components/WineCard';
 import AddWineDialog from '@/components/AddWineDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Wine, User, Lightbulb } from 'lucide-react';
 import vineyardBg from '@/assets/vineyard-bg.png';
 
 type WineItem = {

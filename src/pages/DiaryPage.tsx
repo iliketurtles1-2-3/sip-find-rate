@@ -113,8 +113,8 @@ const CellarPage = () => {
       <div className="pt-10 pb-4 px-5">
         <div className="flex items-end justify-between mb-6">
           <div>
-            <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Your Collection</p>
-            <h1 className="text-3xl font-bold tracking-tight">Cellar</h1>
+            <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">Your Tastings</p>
+            <h1 className="text-3xl font-bold tracking-tight">Diary</h1>
           </div>
           <Button
             size="sm"

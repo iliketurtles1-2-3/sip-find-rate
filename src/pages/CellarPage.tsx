@@ -1,44 +1,34 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
+import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { Tables } from '@/integrations/supabase/types';
 import WineCard from '@/components/WineCard';
 import AddWineDialog from '@/components/AddWineDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search, Wine, LogOut } from 'lucide-react';
+import { Plus, Search, Wine } from 'lucide-react';
 
-type WineRow = Tables<'wines'>;
+type WineItem = {
+  id: string;
+  name: string;
+  vintage: number | null;
+  region: string | null;
+  grape_variety: string | null;
+  color: string | null;
+  rating: number | null;
+  notes: string | null;
+  image_url: string | null;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+};
 
 const CellarPage = () => {
-  const { user, signOut } = useAuth();
   const { toast } = useToast();
-  const [wines, setWines] = useState<WineRow[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [wines, setWines] = useState<WineItem[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editWine, setEditWine] = useState<WineRow | null>(null);
+  const [editWine, setEditWine] = useState<WineItem | null>(null);
   const [search, setSearch] = useState('');
 
-  const fetchWines = async () => {
-    const { data, error } = await supabase
-      .from('wines')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
-    } else {
-      setWines(data || []);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchWines();
-  }, []);
-
-  const handleSave = async (wineData: {
+  const handleSave = (wineData: {
     name: string;
     vintage: number | null;
     region: string;
@@ -48,43 +38,29 @@ const CellarPage = () => {
     notes: string;
   }) => {
     if (editWine) {
-      const { error } = await supabase
-        .from('wines')
-        .update(wineData)
-        .eq('id', editWine.id);
-
-      if (error) {
-        toast({ title: 'Error', description: error.message, variant: 'destructive' });
-      } else {
-        toast({ title: 'Updated', description: `${wineData.name} has been updated.` });
-      }
+      setWines(prev => prev.map(w => w.id === editWine.id ? { ...w, ...wineData, updated_at: new Date().toISOString() } : w));
+      toast({ title: 'Updated', description: `${wineData.name} has been updated.` });
     } else {
-      const { error } = await supabase
-        .from('wines')
-        .insert({ ...wineData, user_id: user!.id });
-
-      if (error) {
-        toast({ title: 'Error', description: error.message, variant: 'destructive' });
-      } else {
-        toast({ title: 'Added', description: `${wineData.name} added to your cellar.` });
-      }
+      const newWine: WineItem = {
+        id: crypto.randomUUID(),
+        ...wineData,
+        image_url: null,
+        user_id: 'local',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      setWines(prev => [newWine, ...prev]);
+      toast({ title: 'Added', description: `${wineData.name} added to your cellar.` });
     }
-
     setEditWine(null);
-    fetchWines();
   };
 
-  const handleDelete = async (id: string) => {
-    const { error } = await supabase.from('wines').delete().eq('id', id);
-    if (error) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
-    } else {
-      toast({ title: 'Removed', description: 'Wine removed from your cellar.' });
-      fetchWines();
-    }
+  const handleDelete = (id: string) => {
+    setWines(prev => prev.filter(w => w.id !== id));
+    toast({ title: 'Removed', description: 'Wine removed from your cellar.' });
   };
 
-  const handleEdit = (wine: WineRow) => {
+  const handleEdit = (wine: WineItem) => {
     setEditWine(wine);
     setDialogOpen(true);
   };
@@ -112,33 +88,19 @@ const CellarPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b border-border sticky top-0 bg-background/80 backdrop-blur-xl z-50">
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-4 px-4">
           <div className="flex items-center gap-3">
             <Wine className="w-6 h-6 text-wine-gold" />
             <h1 className="text-xl font-display font-bold">Cellar</h1>
           </div>
-          <div className="flex items-center gap-3">
-            <Button
-              onClick={() => { setEditWine(null); setDialogOpen(true); }}
-              size="sm"
-            >
-              <Plus className="w-4 h-4 mr-1" /> Add Wine
-            </Button>
-            <button
-              onClick={signOut}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              title="Sign out"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
+          <Button onClick={() => { setEditWine(null); setDialogOpen(true); }} size="sm">
+            <Plus className="w-4 h-4 mr-1" /> Add Wine
+          </Button>
         </div>
       </header>
 
       <main className="container max-w-5xl mx-auto px-4 py-8">
-        {/* Stats */}
         {wines.length > 0 && (
           <div className="grid grid-cols-3 gap-4 mb-8">
             {[
@@ -154,7 +116,6 @@ const CellarPage = () => {
           </div>
         )}
 
-        {/* Search */}
         {wines.length > 0 && (
           <div className="relative mb-6">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -167,12 +128,7 @@ const CellarPage = () => {
           </div>
         )}
 
-        {/* Wine Grid */}
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : filteredWines.length > 0 ? (
+        {filteredWines.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2">
             {filteredWines.map((wine) => (
               <WineCard key={wine.id} wine={wine} onEdit={handleEdit} onDelete={handleDelete} />

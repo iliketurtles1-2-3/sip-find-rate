@@ -7,7 +7,6 @@ import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import HomePage from "./pages/HomePage";
 import DiaryPage from "./pages/DiaryPage";
 import CellarPage from "./pages/CellarPage";
-import SuggestionsPage from "./pages/SuggestionsPage";
 import SettingsPage from "./pages/SettingsPage";
 import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
@@ -40,7 +39,6 @@ const App = () => (
             <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
             <Route path="/diary" element={<ProtectedRoute><DiaryPage /></ProtectedRoute>} />
             <Route path="/cellar" element={<ProtectedRoute><CellarPage /></ProtectedRoute>} />
-            <Route path="/suggestions" element={<ProtectedRoute><SuggestionsPage /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>

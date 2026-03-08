@@ -15,8 +15,8 @@ export default {
   	extend: {
   		fontFamily: {
   			display: [
-  				'Playfair Display"',
-  				'serif'
+  				'Outfit',
+  				'sans-serif'
   			],
   			sans: [
   				'Inter',

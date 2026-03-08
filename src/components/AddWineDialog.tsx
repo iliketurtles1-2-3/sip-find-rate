@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import StarRating from './StarRating';
 import { Tables } from '@/integrations/supabase/types';
+import { Camera, X, Loader2 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 type WineRow = Tables<'wines'>;
 
@@ -47,11 +50,14 @@ interface AddWineDialogProps {
     color: string;
     rating: number | null;
     notes: string;
+    image_url?: string | null;
   }) => void;
   editWine?: WineRow | null;
 }
 
 const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogProps) => {
+  const { user } = useAuth();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState('');
   const [vintage, setVintage] = useState('');
   const [region, setRegion] = useState('');
@@ -59,6 +65,9 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
   const [color, setColor] = useState('');
   const [rating, setRating] = useState(0);
   const [notes, setNotes] = useState('');
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (editWine) {
@@ -69,6 +78,8 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
       setColor(editWine.color || '');
       setRating(editWine.rating || 0);
       setNotes(editWine.notes || '');
+      setImageUrl(editWine.image_url || null);
+      setImagePreview(editWine.image_url || null);
     } else {
       setName('');
       setVintage('');
@@ -77,8 +88,41 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
       setColor('');
       setRating(0);
       setNotes('');
+      setImageUrl(null);
+      setImagePreview(null);
     }
   }, [editWine, open]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    // Preview
+    const reader = new FileReader();
+    reader.onload = (ev) => setImagePreview(ev.target?.result as string);
+    reader.readAsDataURL(file);
+
+    setUploading(true);
+    const ext = file.name.split('.').pop();
+    const filePath = `${user.id}/${crypto.randomUUID()}.${ext}`;
+
+    const { error } = await supabase.storage
+      .from('wine-photos')
+      .upload(filePath, file, { upsert: true });
+
+    if (!error) {
+      const { data: { publicUrl } } = supabase.storage
+        .from('wine-photos')
+        .getPublicUrl(filePath);
+      setImageUrl(publicUrl);
+    }
+    setUploading(false);
+  };
+
+  const removeImage = () => {
+    setImageUrl(null);
+    setImagePreview(null);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,19 +134,58 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
       color,
       rating: rating > 0 ? rating : null,
       notes,
+      image_url: imageUrl,
     });
     onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-card border-border max-w-lg">
+      <DialogContent className="bg-card border-border max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="font-display text-xl">
-            {editWine ? 'Edit Wine' : 'Add a Bottle'}
+          <DialogTitle className="text-xl font-semibold">
+            {editWine ? 'Edit Wine' : 'Log a Bottle'}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 font-sans">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Photo upload */}
+          <div className="space-y-2">
+            <Label>Photo</Label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+            {imagePreview ? (
+              <div className="relative w-full aspect-[3/2] rounded-xl overflow-hidden border border-border bg-muted">
+                <img src={imagePreview} alt="Wine" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute top-2 right-2 w-7 h-7 rounded-full bg-background/80 backdrop-blur flex items-center justify-center hover:bg-background transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                {uploading && (
+                  <div className="absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center">
+                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full aspect-[3/2] rounded-xl border-2 border-dashed border-border bg-muted/30 flex flex-col items-center justify-center gap-2 hover:border-primary/40 hover:bg-muted/50 transition-all"
+              >
+                <Camera className="w-6 h-6 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Tap to add a photo</span>
+              </button>
+            )}
+          </div>
+
           <div className="space-y-2">
             <Label htmlFor="wine-name">Wine Name *</Label>
             <Input
@@ -187,8 +270,10 @@ const AddWineDialog = ({ open, onOpenChange, onSave, editWine }: AddWineDialogPr
             />
           </div>
 
-          <Button type="submit" className="w-full">
-            {editWine ? 'Save Changes' : 'Add to Cellar'}
+          <Button type="submit" className="w-full" disabled={uploading}>
+            {uploading ? (
+              <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Uploading...</>
+            ) : editWine ? 'Save Changes' : 'Add to Cellar'}
           </Button>
         </form>
       </DialogContent>

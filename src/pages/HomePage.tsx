@@ -101,7 +101,7 @@ const HomePage = () => {
       <div className="pb-32 px-6 text-center">
         <Button
           size="lg"
-          onClick={() => navigate('/cellar')}
+          onClick={() => navigate('/diary')}
           className="rounded-full px-8">
           <Plus className="w-4 h-4 mr-2" /> Log New Wine
         </Button>

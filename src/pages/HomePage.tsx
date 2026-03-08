@@ -86,11 +86,13 @@ const HomePage = () => {
               <p className="text-2xl font-bold text-foreground" style={{ fontFamily: "'Outfit', sans-serif" }}>{stats.avgRating}</p>
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Avg Rating</p>
             </div>
-            <div className="col-span-2 rounded-2xl bg-card/80 backdrop-blur-md border border-border p-4 flex items-center gap-3">
+            <div className="col-span-2 rounded-2xl bg-card/80 backdrop-blur-md border border-border p-3 flex items-center gap-3 overflow-hidden">
               {stats.topRegion !== '—' ? (
-                <RegionIcon region={stats.topRegion} className="w-10 h-10 shrink-0" />
+                <div className="w-14 h-14 rounded-xl bg-muted/30 border border-border/50 flex items-center justify-center shrink-0 overflow-hidden">
+                  <RegionIcon region={stats.topRegion} className="w-12 h-12" />
+                </div>
               ) : (
-                <MapPin className="w-4 h-4 text-primary shrink-0" />
+                <MapPin className="w-5 h-5 text-primary shrink-0" />
               )}
               <div>
                 <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Top Region</p>

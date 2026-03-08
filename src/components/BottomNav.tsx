@@ -1,11 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Wine, Lightbulb, User, Home } from 'lucide-react';
+import { Wine, Lightbulb, Home } from 'lucide-react';
 
 const tabs = [
   { path: '/', label: 'Home', icon: Home },
   { path: '/cellar', label: 'Cellar', icon: Wine },
   { path: '/suggestions', label: 'Suggestions', icon: Lightbulb },
-  { path: '/settings', label: 'Settings', icon: User },
 ];
 
 const BottomNav = () => {

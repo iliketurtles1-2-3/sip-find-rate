@@ -104,6 +104,7 @@ const SuggestionsPage = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <div className="fixed inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none z-10" />
       {/* Header */}
       <div className="pt-10 pb-2 px-5">
         <div className="flex items-center gap-2 mb-1">

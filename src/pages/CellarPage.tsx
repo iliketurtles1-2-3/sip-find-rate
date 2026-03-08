@@ -98,7 +98,7 @@ const CellarPage = () => {
       <header className="border-b border-border sticky top-0 bg-background/80 backdrop-blur-xl z-50">
         <div className="container max-w-5xl mx-auto flex items-center justify-between py-4 px-4">
           <div className="flex items-center gap-3">
-            <Wine className="w-6 h-6 text-wine-gold" />
+            <img src={bottleLogo} alt="Cellar" className="w-7 h-7 invert brightness-200" />
             <h1 className="text-xl font-display font-bold">Cellar</h1>
           </div>
           <Button onClick={() => { setEditWine(null); setDialogOpen(true); }} size="sm">

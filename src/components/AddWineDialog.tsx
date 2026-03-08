@@ -12,6 +12,30 @@ type WineRow = Tables<'wines'>;
 
 const WINE_COLORS = ['red', 'white', 'rosé', 'sparkling', 'dessert', 'orange'] as const;
 
+const WINE_REGIONS = [
+  'Bordeaux, France',
+  'Burgundy, France',
+  'Champagne, France',
+  'Rhône Valley, France',
+  'Loire Valley, France',
+  'Alsace, France',
+  'Tuscany, Italy',
+  'Piedmont, Italy',
+  'Veneto, Italy',
+  'Rioja, Spain',
+  'Ribera del Duero, Spain',
+  'Napa Valley, USA',
+  'Sonoma, USA',
+  'Willamette Valley, USA',
+  'Barossa Valley, Australia',
+  'Marlborough, New Zealand',
+  'Mendoza, Argentina',
+  'Stellenbosch, South Africa',
+  'Mosel, Germany',
+  'Douro Valley, Portugal',
+  'Wachau, Austria',
+] as const;
+
 interface AddWineDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;

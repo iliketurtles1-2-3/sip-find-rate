@@ -50,22 +50,23 @@ const HomePage = () => {
       <div className="fixed inset-0 bg-gradient-to-b from-transparent via-transparent to-background -z-10" />
       <div className="fixed inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background via-background/95 to-transparent -z-10" />
 
-      <div className="pt-16 px-5">
+      <div className="pt-28 px-5">
         {/* Dashboard block — ~25vh */}
         <div className="h-[25vh] flex gap-3">
-          {/* Left third — recommendation */}
-          <div className="w-1/3 rounded-2xl bg-card/80 backdrop-blur-md border border-border p-4 flex flex-col justify-between">
-            <div className="flex items-center gap-1.5 text-accent">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-medium uppercase tracking-wider">Pick of the day</span>
+          {/* Left — recommendation (wider) */}
+          <div className="w-2/5 rounded-2xl bg-card/80 backdrop-blur-md border border-border p-3 flex flex-col">
+            <div className="flex items-center gap-1.5 text-accent mb-2">
+              <Sparkles className="w-3 h-3" />
+              <span className="text-[9px] font-medium uppercase tracking-wider">Pick of the day</span>
             </div>
-            <div>
-              <p className="text-sm font-semibold text-foreground leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>{pick.name}</p>
-              <p className="text-[11px] text-muted-foreground leading-snug mt-1 line-clamp-3">{pick.note}</p>
+            <div className="w-full aspect-[4/3] rounded-xl bg-muted/50 border border-border/50 flex items-center justify-center mb-2 overflow-hidden">
+              <Wine className="w-6 h-6 text-muted-foreground/30" />
             </div>
+            <p className="text-xs font-semibold text-foreground leading-tight" style={{ fontFamily: "'Outfit', sans-serif" }}>{pick.name}</p>
+            <p className="text-[10px] text-muted-foreground leading-snug mt-0.5 line-clamp-2">{pick.note}</p>
           </div>
 
-          {/* Right two-thirds — stats grid */}
+          {/* Right — stats grid */}
           <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-3">
             <div className="rounded-2xl bg-card/80 backdrop-blur-md border border-border p-4 flex flex-col justify-center items-center">
               <Wine className="w-4 h-4 text-primary mb-1" />

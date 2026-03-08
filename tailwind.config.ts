@@ -14,20 +14,20 @@ export default {
   	},
   	extend: {
   		fontFamily: {
-  			display: [
-  				'Playfair Display"',
-  				'serif'
-  			],
-  			sans: [
-  				'Inter',
-  				'ui-sans-serif',
-  				'system-ui',
-  				'sans-serif',
-  				'Apple Color Emoji',
-  				'Segoe UI Emoji',
-  				'Segoe UI Symbol',
-  				'Noto Color Emoji'
-  			],
+			display: [
+				'Outfit',
+				'sans-serif'
+			],
+			sans: [
+				'Outfit',
+				'ui-sans-serif',
+				'system-ui',
+				'sans-serif',
+				'Apple Color Emoji',
+				'Segoe UI Emoji',
+				'Segoe UI Symbol',
+				'Noto Color Emoji'
+			],
   			serif: [
   				'ui-serif',
   				'Georgia',

@@ -56,7 +56,7 @@
     --wine-rosé: 340 40% 60%;
     --wine-white-grape: 50 40% 70%;
     --wine-sparkling: 45 50% 75%;
-    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-sans: Outfit, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     --shadow-sm: 0px 1px 1.5px 0px hsla(0, 0%, 0%, 0.16);
     --shadow: 0px 1px 3px 0px hsla(0, 0%, 0%, 0.16);
@@ -64,7 +64,7 @@
     --shadow-lg: 0px 1px 7.5px 0px hsla(0, 0%, 0%, 0.16);
   }
   .dark {
-    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-sans: Outfit, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --font-mono: Inconsolata, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     --radius: 1.25rem;
     --shadow-sm: 0px 1px 1.5px 0px hsla(0, 0%, 0%, 0.16);
@@ -84,15 +84,15 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
   }
   .font-sans {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Outfit', sans-serif;
   }
 }

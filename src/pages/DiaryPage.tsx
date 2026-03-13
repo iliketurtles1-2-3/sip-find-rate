@@ -5,7 +5,7 @@ import WineCard from '@/components/WineCard';
 import AddWineDialog from '@/components/AddWineDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, Search, Wine, Star, Grape, Filter, SlidersHorizontal } from 'lucide-react';
+import { Plus, Search, Wine, Star, Grape } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
@@ -14,7 +14,7 @@ type WineItem = Tables<'wines'>;
 
 const colorFilters = ['all', 'red', 'white', 'rosé', 'sparkling', 'dessert', 'orange'] as const;
 
-const CellarPage = () => {
+const DiaryPage = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [wines, setWines] = useState<WineItem[]>([]);
@@ -226,4 +226,4 @@ const CellarPage = () => {
   );
 };
 
-export default CellarPage;
+export default DiaryPage;

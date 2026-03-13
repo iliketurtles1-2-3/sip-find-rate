@@ -44,8 +44,8 @@ services:
       SNIPPETS_MANAGEMENT_FOLDER: /app/snippets
       EDGE_FUNCTIONS_MANAGEMENT_FOLDER: /app/edge-functions
     volumes:
-      - supabase_snippets:/app/snippets
-      - supabase_functions:/app/edge-functions
+      - /opt/supabase/snippets:/app/snippets
+      - /opt/supabase/functions:/app/edge-functions
   kong:
     container_name: supabase-kong
     image: kong:2.8.1
@@ -214,13 +214,13 @@ services:
       ENABLE_IMAGE_TRANSFORMATION: "true"
       IMGPROXY_URL: http://imgproxy:5001
     volumes:
-      - supabase_storage:/var/lib/storage
+      - /opt/supabase/storage:/var/lib/storage
   imgproxy:
     container_name: supabase-imgproxy
     image: darthsim/imgproxy:v3.30.1
     restart: unless-stopped
     volumes:
-      - supabase_storage:/var/lib/storage
+      - /opt/supabase/storage:/var/lib/storage
     healthcheck:
       test: ["CMD", "imgproxy", "health"]
       timeout: 5s
@@ -287,8 +287,8 @@ services:
       timeout: 5s
       retries: 10
     volumes:
-      - supabase_db_data:/var/lib/postgresql/data
-      - db_config:/etc/postgresql-custom
+      - /opt/supabase/db:/var/lib/postgresql/data
+      - /opt/supabase/db-config:/etc/postgresql-custom
     environment:
       POSTGRES_HOST: /var/run/postgresql
       PGPORT: "5432"
@@ -305,9 +305,3 @@ services:
       - config_file=/etc/postgresql/postgresql.conf
       - -c
       - log_min_messages=fatal
-volumes:
-  supabase_db_data:
-  supabase_storage:
-  supabase_snippets:
-  supabase_functions:
-  db_config:

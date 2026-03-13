@@ -64,6 +64,16 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
+## Wine Data Sources
+
+Freely available wine databases you can use to populate this project:
+
+- **[Kaggle Wine Reviews](https://www.kaggle.com/datasets/zynicide/wine-reviews)** — ~130k wine reviews with ratings, variety, region, and description. Best for self-hosted Supabase: download CSV and import directly into your table.
+- **[Open Food Facts](https://world.openfoodfacts.org/)** — Open database with wine data, free API available.
+- **[Wine API (wineapi.dev)](https://wineapi.dev/)** — Small free tier with structured wine data.
+
+> For self-hosted Supabase, the Kaggle dataset is the easiest path: download the CSV and use Supabase's table import feature.
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!

@@ -152,7 +152,7 @@ services:
         - CMD-SHELL
         - |
           curl -sSfL --head -o /dev/null \
-          -H "Authorization: Bearer YOUR_ANON_KEY" \
+          -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
           http://localhost:4000/api/tenants/realtime-dev/health
       timeout: 5s
       interval: 30s
@@ -160,6 +160,7 @@ services:
       start_period: 10s
     environment:
       PORT: "4000"
+      SUPABASE_ANON_KEY: YOUR_ANON_KEY
       DB_HOST: db
       DB_PORT: "5432"
       DB_USER: supabase_admin
@@ -257,6 +258,7 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+      start_period: 30s
     depends_on:
       db:
         condition: service_healthy
@@ -309,4 +311,3 @@ volumes:
   supabase_snippets:
   supabase_functions:
   db_config:
-  deno_cache:

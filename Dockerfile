@@ -15,11 +15,12 @@ ARG VITE_SUPABASE_PROJECT_ID
 RUN npm run build
 
 # Stage 2: Serve
-FROM nginx:alpine
+FROM node:20-alpine
 
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN npm install -g serve
 
-EXPOSE 80
+COPY --from=builder /app/dist /app
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["serve", "-s", "/app", "-l", "3000"]

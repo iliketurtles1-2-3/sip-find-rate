@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# Sip Find Rate
 
-## Project info
+A personal wine diary and cellar tracker for logging bottles, rating tastings, and keeping tabs on what is waiting in the cellar.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Sip Find Rate is built as a small, mobile-friendly React app with Supabase authentication and storage. It gives you a quick home dashboard, a searchable tasting diary, and an inventory view for tracking bottle counts and storage locations.
 
-## How can I edit this code?
+## What It Does
 
-There are several ways of editing your application.
+- Track wines with name, vintage, region, grape variety, color, rating, notes, and bottle imagery.
+- Keep a tasting diary with search, filters, editable entries, and quick collection stats.
+- Manage cellar inventory separately from tasting notes, including quantities and storage locations.
+- See a home dashboard with total bottles, average rating, top region, and a daily wine pick.
+- Sign in securely with Supabase Auth so each user has their own collection.
+- Run as a Vite web app, with Capacitor configuration included for mobile packaging.
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn-ui / Radix UI
+- Supabase
+- TanStack Query
+- React Router
+- Capacitor
+- Vitest
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js and npm
+- A Supabase project with the expected tables and auth configuration
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Install
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone https://github.com/iliketurtles1-2-3/sip-find-rate.git
+cd sip-find-rate
+npm install
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Configure Environment
 
-# Step 3: Install the necessary dependencies.
-npm i
+Create a `.env.local` file in the project root:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```
+
+The app expects Supabase tables for wine entries and cellar inventory. The client is configured in `src/integrations/supabase/client.ts`, and generated database types live in `src/integrations/supabase/types.ts`.
+
+### Run Locally
+
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The Vite dev server is configured for port `8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Available Scripts
 
-**Use GitHub Codespaces**
+```sh
+npm run dev        # Start the local development server
+npm run build      # Build a production bundle
+npm run build:dev  # Build with development mode settings
+npm run preview    # Preview the production build locally
+npm run lint       # Run ESLint
+npm run test       # Run the Vitest suite
+npm run test:watch # Run tests in watch mode
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```txt
+src/
+  components/       Shared UI and wine-specific components
+  hooks/            Auth and app hooks
+  integrations/     Supabase client and generated database types
+  pages/            App routes: auth, home, diary, cellar, settings
+  assets/           Visual assets used by the interface
+```
 
-This project is built with:
+## Main Screens
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `HomePage` shows collection stats, top region, and the daily pick.
+- `DiaryPage` is the tasting journal for adding, editing, searching, filtering, and rating wines.
+- `CellarPage` tracks bottle inventory, quantities, locations, and new or existing wines.
+- `SettingsPage` handles account and app settings.
+- `AuthPage` manages sign-in and account access.
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This project originated from Lovable and can still be published there. It can also be built as a normal Vite app:
 
-## Can I connect a custom domain to my Lovable project?
+```sh
+npm run build
+```
 
-Yes, you can!
+The production output is written to `dist/`.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+For mobile packaging, review `capacitor.config.ts` and run the relevant Capacitor commands after building the web bundle.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Notes
+
+The README used to be the default Lovable template. It now reflects the actual app: a wine diary, rating tool, and cellar inventory tracker.

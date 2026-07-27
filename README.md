@@ -4,6 +4,9 @@ A personal wine diary and cellar tracker for logging bottles, rating tastings, a
 
 Sip Find Rate is built as a small, mobile-friendly React app with Supabase authentication and storage. It gives you a quick home dashboard, a searchable tasting diary, and an inventory view for tracking bottle counts and storage locations.
 
+<img width="1107" height="1305" alt="grafik" src="https://github.com/user-attachments/assets/aa610e55-ef49-479d-9f79-7a2a9bbe3c66" />
+
+
 ## What It Does
 
 - Track wines with name, vintage, region, grape variety, color, rating, notes, and bottle imagery.
